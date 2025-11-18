@@ -5,6 +5,7 @@ import type { Script } from "botc-script-checker";
 import exampleScript from "./data/example-script.json";
 import { useScriptLoader } from "./hooks/useScriptLoader";
 import { usePdfGeneration } from "./hooks/usePdfGeneration";
+import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { ScriptControls } from "./components/ScriptControls";
 import { ScriptEditor } from "./components/ScriptEditor";
 import { PdfModal } from "./components/PdfModal";
@@ -39,6 +40,13 @@ export function App() {
   } = usePdfGeneration();
 
   const [options, setOptions] = useState<ScriptOptions>(DEFAULT_OPTIONS);
+
+  // Auto-detect overflow and adjust compactness
+  useOverflowDetection({
+    options,
+    setOptions,
+    script,
+  });
 
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
