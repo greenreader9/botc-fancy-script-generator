@@ -171,6 +171,15 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/e/e3/Icon_beggar.png",
     id: "beggar",
   },
+  bigwig: {
+    name: "Big Wig",
+    ability:
+      "Each nominee chooses a player: until voting, only they may speak & they are mad the nominee is good or they might die.",
+    team: "loric",
+    wiki_image:
+      "https://wiki.bloodontheclocktower.com/images/8/8f/Icon_big_wig.png",
+    id: "bigwig",
+  },
   bishop: {
     name: "Bishop",
     ability:
@@ -214,7 +223,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   bootlegger: {
     name: "Bootlegger",
     ability: "This script has homebrew characters or rules.",
-    team: "fabled",
+    team: "loric",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/0/08/Icon_bootlegger.png",
     id: "bootlegger",
@@ -622,7 +631,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
   gardener: {
     name: "Gardener",
     ability: "The Storyteller assigns 1 or more players' characters.",
-    team: "fabled",
+    team: "loric",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/5/5c/Icon_gardener.png",
     id: "gardener",
@@ -1542,7 +1551,7 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     name: "Storm Catcher",
     ability:
       "Name a good character. If in play, they can only die by execution, but evil players learn which player it is.",
-    team: "fabled",
+    team: "loric",
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/0/08/Icon_stormcatcher.png",
     id: "stormcatcher",
@@ -1606,7 +1615,9 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     otherNightReminder:
       "If a player died tonight, show the *YOU ARE* info token, their character token, & a thumbs up or thumbs down.",
     name: "Tor",
-    team: "fabled",
+    wiki_image:
+      "https://wiki.bloodontheclocktower.com/images/6/61/Icon_tor.png",
+    team: "loric",
     ability:
       "Players don't know their character or alignment. They learn them when they die.",
   },

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import { parseScript } from "../utils/scriptParser";
-import { sortScript } from "botc-script-checker";
+import { sortScript, nightOrders } from "botc-script-checker";
 import type { Script } from "botc-script-checker";
-import { nightOrders } from "botc-script-checker/src/data/nightOrders";
 import {
   NightOrderEntry,
   NightOrders,
