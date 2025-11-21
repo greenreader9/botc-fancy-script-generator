@@ -58,6 +58,7 @@ function resolveOfficialCharacter(id: string): ResolvedCharacter | null {
 function resolveCustomCharacter(char: ScriptCharacter): ResolvedCharacter {
   return {
     ...char,
+    team: (char.team as any) === "traveler" ? "traveller" : char.team,
     name: toTitleCase(char.name),
     isCustom: true,
   };

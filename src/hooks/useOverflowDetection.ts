@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "preact/hooks";
 import type { ScriptOptions, ParsedScript } from "botc-character-sheet";
 
-type Appearance = "normal" | "compact" | "super-compact";
+type Appearance = "normal" | "compact" | "super-compact" | "mega-compact";
 
 interface UseOverflowDetectionProps {
   options: ScriptOptions;
@@ -9,7 +9,12 @@ interface UseOverflowDetectionProps {
   script: ParsedScript | null;
 }
 
-const APPEARANCE_LEVELS: Appearance[] = ["normal", "compact", "super-compact"];
+const APPEARANCE_LEVELS: Appearance[] = [
+  "normal",
+  "compact",
+  "super-compact",
+  "mega-compact",
+];
 
 /**
  * Hook to detect if the CharacterSheet overflows its container and automatically

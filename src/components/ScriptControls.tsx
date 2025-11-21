@@ -169,8 +169,9 @@ export function ScriptControls({
                           className="toggle-input"
                         >
                           <option value="normal">Normal</option>
-                          <option value="compact">Compact</option>
-                          <option value="super-compact">Super Compact</option>
+                          <option value="compact">Small</option>
+                          <option value="super-compact">Smaller</option>
+                          <option value="mega-compact">Smallest</option>
                         </select>
                       </label>
                     </div>
