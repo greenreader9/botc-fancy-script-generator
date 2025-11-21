@@ -44,7 +44,7 @@ export function parseScript(json: unknown): ParsedScript {
 }
 
 function resolveOfficialCharacter(id: string): ResolvedCharacter | null {
-  const lowerId = id.toLowerCase();
+  const lowerId = id.toLowerCase().replace("_", "");
   const char = ALL_CHARACTERS[lowerId];
 
   if (!char) {

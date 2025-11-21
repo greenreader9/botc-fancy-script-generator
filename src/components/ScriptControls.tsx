@@ -67,253 +67,287 @@ export function ScriptControls({
             </p>
             <div className="controls-grid">
               <div className="control-group">
-                <label className="control-group-label">Appearance</label>
                 <div className="control-group-content">
-                  <div className="color-picker-section">
-                    <label htmlFor="sidebar-color" className="color-label">
-                      Change Script Colour:
-                    </label>
-                    <input
-                      id="sidebar-color"
-                      type="color"
-                      value={options.color}
-                      onInput={(e) =>
-                        onColorChange((e.target as HTMLInputElement).value)
-                      }
-                      onChange={(e) =>
-                        onColorChange((e.target as HTMLInputElement).value)
-                      }
-                      className="color-input"
-                    />
-                  </div>
-                  <button
-                    onClick={() => onColorChange(randomColor())}
-                    className="update-button"
-                  >
-                    Randomise
-                  </button>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <span className="toggle-text">Appearance:</span>
-                      <select
-                        value={options.appearance}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "appearance",
-                            (e.target as HTMLSelectElement).value as
-                              | "normal"
-                              | "compact"
-                              | "super-compact"
-                          )
+                  <div className="options-subsection">
+                    <label className="control-group-label">Appearance</label>
+                    <div className="color-picker-section">
+                      <label htmlFor="sidebar-color" className="color-label">
+                        Colour:
+                      </label>
+                      <input
+                        id="sidebar-color"
+                        type="color"
+                        value={options.color}
+                        onInput={(e) =>
+                          onColorChange((e.target as HTMLInputElement).value)
                         }
-                        className="toggle-input"
+                        onChange={(e) =>
+                          onColorChange((e.target as HTMLInputElement).value)
+                        }
+                        className="color-input"
+                      />
+                      <button
+                        onClick={() => onColorChange(randomColor())}
+                        className="update-button"
+                        style={{ fontSize: "17px", padding: "8px 16px" }}
                       >
-                        <option value="normal">Normal</option>
-                        <option value="compact">Compact</option>
-                        <option value="super-compact">Super Compact</option>
-                      </select>
-                    </label>
-                  </div>
+                        🎲
+                      </button>
+                    </div>
 
-                  <div className="toggle-section">
-                    <label className="toggle-label">
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.includeMargins}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "includeMargins",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Include Margins</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.showBackingSheet}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "showBackingSheet",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">
+                          Include Backing Sheet
+                        </span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.showNightSheet}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "showNightSheet",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Include Night Sheet</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="options-subsection">
+                    <label className="control-group-label">
+                      Character Sheet
+                    </label>
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <span className="toggle-text">Sizing:</span>
+                        <select
+                          value={options.appearance}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "appearance",
+                              (e.target as HTMLSelectElement).value as
+                                | "normal"
+                                | "compact"
+                                | "super-compact"
+                            )
+                          }
+                          className="toggle-input"
+                        >
+                          <option value="normal">Normal</option>
+                          <option value="compact">Compact</option>
+                          <option value="super-compact">Super Compact</option>
+                        </select>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.showAuthor}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "showAuthor",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Show Author</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.showJinxes}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "showJinxes",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Show Jinxes</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.useOldJinxes}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "useOldJinxes",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Use Old Jinxes</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.showSwirls}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "showSwirls",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Show Swirls</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
+                          checked={options.solidTitle}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "solidTitle",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Solid Title</span>
+                      </label>
+                    </div>
+
+                    <div className="slider-section">
+                      <label htmlFor="icon-scale" className="slider-label">
+                        Icon Scale: {options.iconScale.toFixed(1)}
+                      </label>
                       <input
-                        type="checkbox"
-                        checked={options.showAuthor}
-                        onChange={(e) =>
+                        id="icon-scale"
+                        type="range"
+                        min="0.5"
+                        max="3"
+                        step="0.1"
+                        value={options.iconScale}
+                        onInput={(e) =>
                           onOptionChange(
-                            "showAuthor",
-                            (e.target as HTMLInputElement).checked
+                            "iconScale",
+                            parseFloat((e.target as HTMLInputElement).value)
                           )
                         }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Show Author</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.showJinxes}
                         onChange={(e) =>
                           onOptionChange(
-                            "showJinxes",
-                            (e.target as HTMLInputElement).checked
+                            "iconScale",
+                            parseFloat((e.target as HTMLInputElement).value)
                           )
                         }
-                        className="toggle-input"
+                        className="slider-input"
                       />
-                      <span className="toggle-text">Show Jinxes</span>
-                    </label>
+                    </div>
                   </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.useOldJinxes}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "useOldJinxes",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Use Old Jinxes</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.showSwirls}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "showSwirls",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Show Swirls</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.solidTitle}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "solidTitle",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Solid Title</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.includeMargins}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "includeMargins",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Include Margins</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.showBackingSheet}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "showBackingSheet",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Include Backing Sheet</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.showNightSheet}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "showNightSheet",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Include Night Sheet</span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.displayNightOrder}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "displayNightOrder",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">
-                        Backing Sheet Night Order
-                      </span>
-                    </label>
-                  </div>
-
-                  <div className="toggle-section">
-                    <label className="toggle-label">
-                      <input
-                        type="checkbox"
-                        checked={options.formatMinorWords}
-                        onChange={(e) =>
-                          onOptionChange(
-                            "formatMinorWords",
-                            (e.target as HTMLInputElement).checked
-                          )
-                        }
-                        className="toggle-input"
-                      />
-                      <span className="toggle-text">Shrink Minor Words</span>
-                    </label>
-                  </div>
-
-                  <div className="slider-section">
-                    <label htmlFor="icon-scale" className="slider-label">
-                      Icon Scale: {options.iconScale.toFixed(1)}
-                    </label>
-                    <input
-                      id="icon-scale"
-                      type="range"
-                      min="0.5"
-                      max="3"
-                      step="0.1"
-                      value={options.iconScale}
-                      onInput={(e) =>
-                        onOptionChange(
-                          "iconScale",
-                          parseFloat((e.target as HTMLInputElement).value)
-                        )
-                      }
-                      onChange={(e) =>
-                        onOptionChange(
-                          "iconScale",
-                          parseFloat((e.target as HTMLInputElement).value)
-                        )
-                      }
-                      className="slider-input"
-                    />
-                  </div>
+                  {options.showBackingSheet && (
+                    <div className="options-subsection">
+                      <label className="control-group-label">
+                        Backing Sheet
+                      </label>
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <input
+                            type="checkbox"
+                            checked={options.displayNightOrder}
+                            onChange={(e) =>
+                              onOptionChange(
+                                "displayNightOrder",
+                                (e.target as HTMLInputElement).checked
+                              )
+                            }
+                            className="toggle-input"
+                          />
+                          <span className="toggle-text">
+                            Include Night Order
+                          </span>
+                        </label>
+                      </div>
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <input
+                            type="checkbox"
+                            checked={options.displayPlayerCounts}
+                            onChange={(e) =>
+                              onOptionChange(
+                                "displayPlayerCounts",
+                                (e.target as HTMLInputElement).checked
+                              )
+                            }
+                            className="toggle-input"
+                          />
+                          <span className="toggle-text">
+                            Include Player Counts
+                          </span>
+                        </label>
+                      </div>
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <input
+                            type="checkbox"
+                            checked={options.formatMinorWords}
+                            onChange={(e) =>
+                              onOptionChange(
+                                "formatMinorWords",
+                                (e.target as HTMLInputElement).checked
+                              )
+                            }
+                            className="toggle-input"
+                          />
+                          <span className="toggle-text">
+                            Shrink Minor Words
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

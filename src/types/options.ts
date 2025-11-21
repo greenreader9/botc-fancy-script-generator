@@ -29,4 +29,5 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   iconScale: 1.6,
   formatMinorWords: false,
   displayNightOrder: false,
+  displayPlayerCounts: false,
 };

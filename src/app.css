@@ -235,7 +235,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .control-group-content {
@@ -321,7 +321,7 @@ body {
 }
 
 select.toggle-input {
-  padding: 6px 10px;
+  padding: 2px 4px;
   border: 2px solid var(--border-color);
   border-radius: 6px;
   background: var(--card-bg);
