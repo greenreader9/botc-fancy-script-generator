@@ -7,7 +7,10 @@ interface ScriptControlsProps {
   isScriptSorted: boolean;
   onFileUpload: (event: Event) => void;
   onLoadExample: () => void;
-  onColorChange: (color: string) => void;
+  onColorChange: (color: string | string[]) => void;
+  onColorArrayChange: (index: number, color: string) => void;
+  onAddColor: () => void;
+  onRemoveColor: (index: number) => void;
   onOptionChange: <K extends keyof ScriptOptions>(
     key: K,
     value: ScriptOptions[K]
@@ -24,11 +27,15 @@ export function ScriptControls({
   onFileUpload,
   onLoadExample,
   onColorChange,
+  onColorArrayChange,
+  onAddColor,
+  onRemoveColor,
   onOptionChange,
   onSort,
   onGeneratePDF,
   onPrint,
 }: ScriptControlsProps) {
+  const isGradient = Array.isArray(options.color);
   return (
     <>
       <h1 className="app-title">
@@ -71,28 +78,106 @@ export function ScriptControls({
                   <div className="options-subsection">
                     <label className="control-group-label">Appearance</label>
                     <div className="color-picker-section">
-                      <label htmlFor="sidebar-color" className="color-label">
-                        Colour:
+                      <label className="color-label">
+                        {isGradient ? "Gradient Colours:" : "Colour:"}
                       </label>
-                      <input
-                        id="sidebar-color"
-                        type="color"
-                        value={options.color}
-                        onInput={(e) =>
-                          onColorChange((e.target as HTMLInputElement).value)
-                        }
-                        onChange={(e) =>
-                          onColorChange((e.target as HTMLInputElement).value)
-                        }
-                        className="color-input"
-                      />
-                      <button
-                        onClick={() => onColorChange(randomColor())}
-                        className="update-button"
-                        style={{ fontSize: "17px", padding: "8px 16px" }}
-                      >
-                        🎲
-                      </button>
+                      {!isGradient ? (
+                        <>
+                          <input
+                            id="sidebar-color"
+                            type="color"
+                            value={options.color as string}
+                            onInput={(e) =>
+                              onColorChange(
+                                (e.target as HTMLInputElement).value
+                              )
+                            }
+                            onChange={(e) =>
+                              onColorChange(
+                                (e.target as HTMLInputElement).value
+                              )
+                            }
+                            className="color-input"
+                          />
+                          <button
+                            onClick={() => onColorChange(randomColor())}
+                            className="update-button"
+                            style={{ fontSize: "17px", padding: "8px 16px" }}
+                          >
+                            🎲
+                          </button>
+                        </>
+                      ) : (
+                        <div style={{ width: "100%" }}>
+                          {(options.color as string[]).map((color, index) => (
+                            <div
+                              key={index}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "8px",
+                                marginBottom: "8px",
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={color}
+                                onInput={(e) =>
+                                  onColorArrayChange(
+                                    index,
+                                    (e.target as HTMLInputElement).value
+                                  )
+                                }
+                                onChange={(e) =>
+                                  onColorArrayChange(
+                                    index,
+                                    (e.target as HTMLInputElement).value
+                                  )
+                                }
+                                className="color-input"
+                              />
+                              <button
+                                onClick={() =>
+                                  onColorArrayChange(index, randomColor())
+                                }
+                                className="update-button"
+                                style={{
+                                  fontSize: "17px",
+                                  padding: "8px 16px",
+                                }}
+                                title="Randomize this color"
+                              >
+                                🎲
+                              </button>
+                              {(options.color as string[]).length > 1 && (
+                                <button
+                                  onClick={() => onRemoveColor(index)}
+                                  className="update-button"
+                                  style={{
+                                    fontSize: "14px",
+                                    padding: "8px 16px",
+                                  }}
+                                  title="Remove this color"
+                                >
+                                  ×
+                                </button>
+                              )}
+                            </div>
+                          ))}
+                          <button
+                            onClick={onAddColor}
+                            className="update-button"
+                            style={{
+                              fontSize: "14px",
+                              padding: "8px 16px",
+                              marginTop: "4px",
+                            }}
+                            title="Add another color"
+                          >
+                            + Add Color
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="toggle-section">
@@ -152,6 +237,24 @@ export function ScriptControls({
                     <label className="control-group-label">
                       Character Sheet
                     </label>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <span className="toggle-text">Number of Sheets:</span>
+                        <input
+                          type="number"
+                          value={options.numberOfCharacterSheets}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "numberOfCharacterSheets",
+                              parseInt((e.target as HTMLInputElement).value)
+                            )
+                          }
+                          className="number-input"
+                        ></input>
+                      </label>
+                    </div>
+
                     <div className="toggle-section">
                       <label className="toggle-label">
                         <span className="toggle-text">Sizing:</span>

@@ -30,4 +30,5 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   formatMinorWords: false,
   displayNightOrder: false,
   displayPlayerCounts: false,
+  numberOfCharacterSheets: 1,
 };

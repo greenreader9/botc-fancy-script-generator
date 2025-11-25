@@ -342,6 +342,30 @@ select.toggle-input:focus {
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.number-input {
+  cursor: pointer;
+  padding: 2px 4px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  transition: border-color 0.2s;
+  width: 3rem;
+  text-align: center;
+}
+
+.number-input:hover {
+  border-color: var(--button-bg);
+}
+
+.number-input:focus {
+  outline: none;
+  border-color: var(--button-bg);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
 .toggle-text {
   font-size: 14px;
   font-weight: 600;

@@ -9,7 +9,7 @@ import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { ScriptControls } from "./components/ScriptControls";
 import { ScriptEditor } from "./components/ScriptEditor";
 import { PdfModal } from "./components/PdfModal";
-import { DEFAULT_OPTIONS } from "./types/options";
+import { DEFAULT_OPTIONS, randomColor } from "./types/options";
 import "./app.css";
 import { ScriptOptions, FancyDoc } from "botc-character-sheet";
 
@@ -20,7 +20,7 @@ export function App() {
     error,
     scriptText,
     isScriptSorted,
-    nightOrders, // Available for future use - contains first/other night characters
+    nightOrders,
     loadScript,
     handleScriptTextChange,
     handleFileUpload,
@@ -48,6 +48,16 @@ export function App() {
     script,
   });
 
+  // Load color from script metadata when script changes
+  useEffect(() => {
+    if (script?.metadata?.colour) {
+      const colour = script.metadata.colour;
+      if (typeof colour === "string" || Array.isArray(colour)) {
+        updateOption("color", colour);
+      }
+    }
+  }, [script]);
+
   // Auto-adjust icon scale when appearance changes
   useEffect(() => {
     if (options.appearance === "compact") {
@@ -67,17 +77,10 @@ export function App() {
   };
 
   const handleLoadExample = () => {
-    const parsed = loadScript(exampleScript as Script);
-    // Load color from metadata if present
-    if (
-      parsed?.metadata?.colour &&
-      typeof parsed.metadata.colour === "string"
-    ) {
-      updateOption("color", parsed.metadata.colour);
-    }
+    loadScript(exampleScript as Script);
   };
 
-  const handleColorChange = (newColor: string) => {
+  const handleColorChange = (newColor: string | string[]) => {
     updateOption("color", newColor);
 
     // Update the colour in the script metadata
@@ -95,15 +98,36 @@ export function App() {
     updateScriptMetadata(updatedScript);
   };
 
-  const handleScriptChange = (newText: string) => {
-    const parsed = handleScriptTextChange(newText);
-    // Load color from metadata if present
-    if (
-      parsed?.metadata?.colour &&
-      typeof parsed.metadata.colour === "string"
-    ) {
-      updateOption("color", parsed.metadata.colour);
+  const handleColorArrayChange = (index: number, newColor: string) => {
+    if (Array.isArray(options.color)) {
+      const newColorArray = [...options.color];
+      newColorArray[index] = newColor;
+      handleColorChange(newColorArray);
     }
+  };
+
+  const handleAddColor = () => {
+    if (typeof options.color === "string") {
+      // Convert single color to array with new color
+      handleColorChange([options.color, randomColor()]);
+    } else if (Array.isArray(options.color)) {
+      // Add new color to existing array
+      handleColorChange([...options.color, randomColor()]);
+    }
+  };
+
+  const handleRemoveColor = (index: number) => {
+    if (Array.isArray(options.color) && options.color.length > 1) {
+      const newColorArray = options.color.filter((_, i) => i !== index);
+      // If only one color left, convert back to string
+      handleColorChange(
+        newColorArray.length === 1 ? newColorArray[0] : newColorArray
+      );
+    }
+  };
+
+  const handleScriptChange = (newText: string) => {
+    handleScriptTextChange(newText);
   };
 
   const handlePrint = () => {
@@ -135,6 +159,9 @@ export function App() {
           onFileUpload={handleFileUpload}
           onLoadExample={handleLoadExample}
           onColorChange={handleColorChange}
+          onColorArrayChange={handleColorArrayChange}
+          onAddColor={handleAddColor}
+          onRemoveColor={handleRemoveColor}
           onOptionChange={updateOption}
           onSort={handleSort}
           onGeneratePDF={handleGeneratePDF}

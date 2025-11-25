@@ -1,12 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
 import { parseScript } from "../utils/scriptParser";
-import { sortScript, nightOrders } from "botc-script-checker";
+import { sortScript } from "botc-script-checker";
 import type { Script } from "botc-script-checker";
-import {
-  NightOrderEntry,
-  NightOrders,
-  ParsedScript,
-} from "botc-character-sheet";
+import { NightOrders, ParsedScript } from "botc-character-sheet";
+import { calculateNightOrders } from "../utils/nightOrders";
 
 export function useScriptLoader() {
   const [script, setScript] = useState<ParsedScript | null>(null);
@@ -26,97 +23,6 @@ export function useScriptLoader() {
     } catch {
       return true; // Assume sorted if we can't check
     }
-  };
-
-  const calculateNightOrders = (
-    parsedScript: ParsedScript,
-    rawScriptData: Script
-  ): NightOrders => {
-    // Create a map from the raw script to get firstNight/otherNight values for custom characters
-    const rawCharMap = new Map<
-      string,
-      { firstNight?: number; otherNight?: number }
-    >();
-    for (const element of rawScriptData) {
-      if (
-        typeof element === "object" &&
-        element !== null &&
-        "id" in element &&
-        element.id !== "_meta"
-      ) {
-        const char = element as any;
-        if (char.firstNight !== undefined || char.otherNight !== undefined) {
-          rawCharMap.set(char.id.toLowerCase(), {
-            firstNight: char.firstNight,
-            otherNight: char.otherNight,
-          });
-        }
-      }
-    }
-
-    // Helper to get position of a character or marker
-    const getPosition = (
-      entry: NightOrderEntry,
-      nightType: "firstNight" | "otherNight",
-      orderList: string[]
-    ): number => {
-      const id = typeof entry === "string" ? entry : entry.id;
-      const officialIndex = orderList.indexOf(id);
-
-      if (officialIndex !== -1) {
-        return officialIndex;
-      }
-
-      // Check if it's a custom character with a numeric position
-      const customData = rawCharMap.get(id);
-      const customValue =
-        nightType === "firstNight"
-          ? customData?.firstNight
-          : customData?.otherNight;
-
-      if (customValue !== undefined && customValue > 0) {
-        return customValue;
-      }
-
-      return Infinity; // Characters without night actions go to the end
-    };
-
-    // Build night order with characters and markers
-    const buildNightOrder = (
-      characters: NightOrderEntry[],
-      nightType: "firstNight" | "otherNight"
-    ): NightOrderEntry[] => {
-      const orderList =
-        nightType === "firstNight"
-          ? nightOrders.firstNight
-          : nightOrders.otherNight;
-
-      // Filter characters that have actions for this night
-      const activeChars = characters.filter((char) => {
-        const position = getPosition(char, nightType, orderList);
-        return position !== Infinity;
-      });
-
-      const charsAndMarkers: NightOrderEntry[] =
-        nightType === "firstNight"
-          ? [...activeChars, "dawn", "dusk", "minioninfo", "demoninfo"]
-          : [...activeChars, "dawn", "dusk"];
-
-      // Sort characters by position
-      charsAndMarkers.sort((a, b) => {
-        return (
-          getPosition(a, nightType, orderList) -
-          getPosition(b, nightType, orderList)
-        );
-      });
-
-      return charsAndMarkers;
-    };
-
-    return {
-      first: buildNightOrder(parsedScript.characters, "firstNight"),
-      other: buildNightOrder(parsedScript.characters, "otherNight"),
-    };
   };
 
   const loadScript = (json: Script) => {
