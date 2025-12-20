@@ -50,7 +50,7 @@ export function ScriptControls({
           <input
             id="file-upload"
             type="file"
-            accept=".json"
+            accept=".json,.json5"
             onChange={onFileUpload}
             className="file-input"
           />

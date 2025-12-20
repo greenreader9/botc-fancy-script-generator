@@ -4,6 +4,7 @@ import { sortScript } from "botc-script-checker";
 import type { Script } from "botc-script-checker";
 import { NightOrders, ParsedScript } from "botc-character-sheet";
 import { calculateNightOrders } from "../utils/nightOrders";
+import JSON5 from "json5";
 
 export function useScriptLoader() {
   const [script, setScript] = useState<ParsedScript | null>(null);
@@ -42,7 +43,7 @@ export function useScriptLoader() {
 
     // Try to parse and update in real-time
     try {
-      const json = JSON.parse(newText);
+      const json = JSON5.parse(newText);
       setRawScript(json);
       const parsed = parseScript(json);
       setScript(parsed);
@@ -52,6 +53,7 @@ export function useScriptLoader() {
 
       return parsed; // Return parsed script for color loading
     } catch (err) {
+      console.error(err);
       // Keep the error state but don't block typing
       setError(err instanceof Error ? err.message : "Invalid JSON format");
       return null;
@@ -67,7 +69,7 @@ export function useScriptLoader() {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const json = JSON.parse(e.target?.result as string);
+        const json = JSON5.parse(e.target?.result as string);
         loadScript(json);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to parse JSON");
@@ -126,7 +128,7 @@ export function useScriptLoader() {
       if (!pastedText) return;
 
       try {
-        const json = JSON.parse(pastedText);
+        const json = JSON5.parse(pastedText);
         loadScript(json);
       } catch (err) {
         // Ignore paste if it's not valid JSON
