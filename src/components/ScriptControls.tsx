@@ -317,6 +317,23 @@ export function ScriptControls({
                       <label className="toggle-label">
                         <input
                           type="checkbox"
+                          checked={options.inlineJinxIcons}
+                          onChange={(e) =>
+                            onOptionChange(
+                              "inlineJinxIcons",
+                              (e.target as HTMLInputElement).checked
+                            )
+                          }
+                          className="toggle-input"
+                        />
+                        <span className="toggle-text">Inline Jinx Icons</span>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <input
+                          type="checkbox"
                           checked={options.useOldJinxes}
                           onChange={(e) =>
                             onOptionChange(

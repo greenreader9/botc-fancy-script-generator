@@ -31,4 +31,5 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   displayNightOrder: false,
   displayPlayerCounts: false,
   numberOfCharacterSheets: 1,
+  inlineJinxIcons: false,
 };
