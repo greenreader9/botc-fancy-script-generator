@@ -33,3 +33,5 @@ public/character_icons/
 Jinxes.csv
 
 .env
+unreleased_characters
+custom_scripts
