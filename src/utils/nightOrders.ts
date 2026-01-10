@@ -109,8 +109,34 @@ export const calculateNightOrders = (
 ): NightOrders => {
   const rawCharMap = createRawCharMap(rawScriptData);
 
-  return {
-    first: buildNightOrder(parsedScript.characters, "firstNight", rawCharMap),
-    other: buildNightOrder(parsedScript.characters, "otherNight", rawCharMap),
-  };
+  const first = parsedScript.metadata?.firstNight?.length
+    ? parseNightOrder(parsedScript.metadata.firstNight, parsedScript.characters)
+    : buildNightOrder(parsedScript.characters, "firstNight", rawCharMap);
+
+  const other = parsedScript.metadata?.otherNight?.length
+    ? parseNightOrder(parsedScript.metadata.otherNight, parsedScript.characters)
+    : buildNightOrder(parsedScript.characters, "otherNight", rawCharMap);
+
+  return { first, other };
+};
+
+const parseNightOrder = (
+  nightOrder: string[],
+  characters: ScriptCharacter[]
+): NightOrderEntry[] => {
+  let nightOrderEntries: NightOrderEntry[] = [];
+  for (const entry of nightOrder) {
+    const foundChar = characters.find(
+      (c) => c.id.toLowerCase() === entry.toLowerCase()
+    );
+    const isNightMarker = ["dawn", "dusk", "minioninfo", "demoninfo"].includes(
+      entry.toLowerCase()
+    );
+    if (foundChar) {
+      nightOrderEntries.push(foundChar);
+    } else if (isNightMarker) {
+      nightOrderEntries.push(entry.toLowerCase() as NightOrderEntry);
+    }
+  }
+  return nightOrderEntries;
 };
