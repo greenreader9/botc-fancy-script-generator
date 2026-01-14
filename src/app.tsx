@@ -169,14 +169,12 @@ export function App() {
         />
 
         {script && (
-          <>
-            <ScriptEditor
-              scriptText={scriptText}
-              error={error}
-              onScriptChange={handleScriptChange}
-              onSave={handleSaveScript}
-            />
-          </>
+          <ScriptEditor
+            scriptText={scriptText}
+            error={error}
+            onScriptChange={handleScriptChange}
+            onSave={handleSaveScript}
+          />
         )}
       </div>
 

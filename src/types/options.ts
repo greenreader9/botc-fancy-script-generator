@@ -24,7 +24,7 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   includeMargins: false,
   solidTitle: false,
   appearance: "normal",
-  showBackingSheet: true,
+  overleaf: "backingSheet",
   showNightSheet: true,
   iconScale: 1.6,
   formatMinorWords: false,

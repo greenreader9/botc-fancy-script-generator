@@ -1,5 +1,6 @@
 import { ScriptOptions } from "botc-character-sheet";
 import { randomColor } from "../types/options";
+import { useState } from "preact/hooks";
 
 interface ScriptControlsProps {
   hasScript: boolean;
@@ -36,6 +37,23 @@ export function ScriptControls({
   onPrint,
 }: ScriptControlsProps) {
   const isGradient = Array.isArray(options.color);
+  const [overleafType, setOverleafType] = useState<
+    "backingSheet" | "infoSheet"
+  >("infoSheet");
+
+  const handleOverleafTypeChange = (type: "backingSheet" | "infoSheet") => {
+    setOverleafType(type);
+    onOptionChange("overleaf", type);
+  };
+
+  const handleDoubleSidedChange = (enabled: boolean) => {
+    if (enabled) {
+      onOptionChange("overleaf", overleafType);
+    } else {
+      onOptionChange("overleaf", "none");
+    }
+  };
+
   return (
     <>
       <h1 className="app-title">
@@ -201,20 +219,39 @@ export function ScriptControls({
                       <label className="toggle-label">
                         <input
                           type="checkbox"
-                          checked={options.showBackingSheet}
+                          checked={options.overleaf !== "none"}
                           onChange={(e) =>
-                            onOptionChange(
-                              "showBackingSheet",
+                            handleDoubleSidedChange(
                               (e.target as HTMLInputElement).checked
                             )
                           }
                           className="toggle-input"
                         />
-                        <span className="toggle-text">
-                          Include Backing Sheet
-                        </span>
+                        <span className="toggle-text">Double Sided</span>
                       </label>
                     </div>
+
+                    {options.overleaf !== "none" && (
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <span className="toggle-text">Overleaf:</span>
+                          <select
+                            value={overleafType}
+                            onChange={(e) =>
+                              handleOverleafTypeChange(
+                                (e.target as HTMLSelectElement).value as
+                                  | "backingSheet"
+                                  | "infoSheet"
+                              )
+                            }
+                            className="toggle-input"
+                          >
+                            <option value="infoSheet">Info Sheet</option>
+                            <option value="backingSheet">Backing Sheet</option>
+                          </select>
+                        </label>
+                      </div>
+                    )}
 
                     <div className="toggle-section">
                       <label className="toggle-label">
@@ -233,6 +270,7 @@ export function ScriptControls({
                       </label>
                     </div>
                   </div>
+
                   <div className="options-subsection">
                     <label className="control-group-label">
                       Character Sheet
@@ -408,7 +446,8 @@ export function ScriptControls({
                       />
                     </div>
                   </div>
-                  {options.showBackingSheet && (
+
+                  {options.overleaf === "backingSheet" && (
                     <div className="options-subsection">
                       <label className="control-group-label">
                         Backing Sheet
@@ -464,6 +503,48 @@ export function ScriptControls({
                           />
                           <span className="toggle-text">
                             Shrink Minor Words
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  )}
+
+                  {options.overleaf === "infoSheet" && (
+                    <div className="options-subsection">
+                      <label className="control-group-label">Info Sheet</label>
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <input
+                            type="checkbox"
+                            checked={options.displayNightOrder}
+                            onChange={(e) =>
+                              onOptionChange(
+                                "displayNightOrder",
+                                (e.target as HTMLInputElement).checked
+                              )
+                            }
+                            className="toggle-input"
+                          />
+                          <span className="toggle-text">
+                            Include Night Order
+                          </span>
+                        </label>
+                      </div>
+                      <div className="toggle-section">
+                        <label className="toggle-label">
+                          <input
+                            type="checkbox"
+                            checked={options.displayPlayerCounts}
+                            onChange={(e) =>
+                              onOptionChange(
+                                "displayPlayerCounts",
+                                (e.target as HTMLInputElement).checked
+                              )
+                            }
+                            className="toggle-input"
+                          />
+                          <span className="toggle-text">
+                            Include Player Counts
                           </span>
                         </label>
                       </div>
