@@ -551,6 +551,12 @@ select.toggle-input:focus {
   font-style: italic;
 }
 
+.changelog-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 40px 20px;
+}
+
 .example-button {
   display: inline-block;
   padding: 14px 32px;

@@ -9,6 +9,7 @@ import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { ScriptControls } from "./components/ScriptControls";
 import { ScriptEditor } from "./components/ScriptEditor";
 import { PdfModal } from "./components/PdfModal";
+import { Changelog } from "./components/Changelog";
 import { DEFAULT_OPTIONS, randomColor } from "./types/options";
 import "./app.css";
 import { ScriptOptions, FancyDoc } from "botc-character-sheet";
@@ -150,62 +151,70 @@ export function App() {
   };
 
   return (
-    <div className="app">
-      <div className="controls">
-        <ScriptControls
-          hasScript={!!script}
-          options={options}
-          isScriptSorted={isScriptSorted}
-          onFileUpload={handleFileUpload}
-          onLoadExample={handleLoadExample}
-          onColorChange={handleColorChange}
-          onColorArrayChange={handleColorArrayChange}
-          onAddColor={handleAddColor}
-          onRemoveColor={handleRemoveColor}
-          onOptionChange={updateOption}
-          onSort={handleSort}
-          onGeneratePDF={handleGeneratePDF}
-          onPrint={handlePrint}
-        />
+    <>
+      <div className="app">
+        <div className="controls">
+          <ScriptControls
+            hasScript={!!script}
+            options={options}
+            isScriptSorted={isScriptSorted}
+            onFileUpload={handleFileUpload}
+            onLoadExample={handleLoadExample}
+            onColorChange={handleColorChange}
+            onColorArrayChange={handleColorArrayChange}
+            onAddColor={handleAddColor}
+            onRemoveColor={handleRemoveColor}
+            onOptionChange={updateOption}
+            onSort={handleSort}
+            onGeneratePDF={handleGeneratePDF}
+            onPrint={handlePrint}
+          />
+
+          {script && (
+            <ScriptEditor
+              scriptText={scriptText}
+              error={error}
+              onScriptChange={handleScriptChange}
+              onSave={handleSaveScript}
+            />
+          )}
+        </div>
 
         {script && (
-          <ScriptEditor
-            scriptText={scriptText}
-            error={error}
-            onScriptChange={handleScriptChange}
-            onSave={handleSaveScript}
-          />
+          <div className="preview-section">
+            <FancyDoc
+              script={script}
+              options={options}
+              nightOrders={nightOrders}
+            />
+          </div>
+        )}
+
+        {!script && !error && (
+          <div className="placeholder">
+            <svg
+              className="placeholder-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+            <p className="placeholder-text">
+              Upload a JSON script file or paste JSON anywhere on the page
+            </p>
+          </div>
         )}
       </div>
 
-      {script && (
-        <div className="preview-section">
-          <FancyDoc
-            script={script}
-            options={options}
-            nightOrders={nightOrders}
-          />
-        </div>
-      )}
-
-      {!script && !error && (
-        <div className="placeholder">
-          <svg
-            className="placeholder-icon"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-            />
-          </svg>
-          <p className="placeholder-text">
-            Upload a JSON script file or paste JSON anywhere on the page
-          </p>
+      {!script && (
+        <div className="changelog-container">
+          <Changelog />
         </div>
       )}
 
@@ -217,6 +226,6 @@ export function App() {
         onClose={closePdfModal}
         onDownload={handleDownloadPDF}
       />
-    </div>
+    </>
   );
 }
