@@ -28,8 +28,8 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   showNightSheet: true,
   iconScale: 1.6,
   formatMinorWords: false,
-  displayNightOrder: false,
-  displayPlayerCounts: false,
+  displayNightOrder: true,
+  displayPlayerCounts: true,
   numberOfCharacterSheets: 1,
   inlineJinxIcons: false,
 };

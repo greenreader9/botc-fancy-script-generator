@@ -39,7 +39,7 @@ export function ScriptControls({
   const isGradient = Array.isArray(options.color);
   const [overleafType, setOverleafType] = useState<
     "backingSheet" | "infoSheet"
-  >("infoSheet");
+  >("backingSheet");
 
   const handleOverleafTypeChange = (type: "backingSheet" | "infoSheet") => {
     setOverleafType(type);
