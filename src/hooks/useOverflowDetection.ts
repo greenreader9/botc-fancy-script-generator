@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "preact/hooks";
 import type { ScriptOptions, ParsedScript } from "botc-character-sheet";
+import { PageDimensions } from "../../../botc-character-sheet/dist/types";
 
 type Appearance = "normal" | "compact" | "super-compact" | "mega-compact";
 
@@ -26,11 +27,13 @@ export function useOverflowDetection({
   script,
 }: UseOverflowDetectionProps) {
   const lastCheckedAppearanceRef = useRef<Appearance | null>(null);
+  const lastCheckedDimensionsRef = useRef<PageDimensions | null>(null);
   const isAdjustingRef = useRef(false);
 
   // Reset detection when script changes
   useEffect(() => {
     lastCheckedAppearanceRef.current = null;
+    lastCheckedDimensionsRef.current = null;
     isAdjustingRef.current = false;
   }, [script]);
 
@@ -43,9 +46,13 @@ export function useOverflowDetection({
       if (!characterSheet) return;
 
       const currentAppearance = options.appearance;
+      const currentDimensions = options.dimensions;
 
       // Prevent re-checking the same appearance level
-      if (lastCheckedAppearanceRef.current === currentAppearance) {
+      if (
+        lastCheckedAppearanceRef.current === currentAppearance &&
+        lastCheckedDimensionsRef.current === currentDimensions
+      ) {
         return;
       }
 
@@ -82,5 +89,5 @@ export function useOverflowDetection({
     }, 300); // 300ms debounce to allow rendering to complete
 
     return () => clearTimeout(timeoutId);
-  }, [options.appearance, script, setOptions]);
+  }, [options.appearance, script, setOptions, options.dimensions]);
 }

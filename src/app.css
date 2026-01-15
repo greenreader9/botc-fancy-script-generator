@@ -332,7 +332,6 @@ select.toggle-input {
   font-size: 14px;
   font-weight: 600;
   transition: border-color 0.2s;
-  min-width: 150px;
 }
 
 select.toggle-input:hover {
@@ -355,7 +354,7 @@ select.toggle-input:focus {
   font-size: 14px;
   font-weight: 600;
   transition: border-color 0.2s;
-  width: 3rem;
+  width: 3.5rem;
   text-align: center;
 }
 

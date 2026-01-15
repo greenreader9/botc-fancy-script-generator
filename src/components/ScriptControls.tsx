@@ -40,6 +40,7 @@ export function ScriptControls({
   const [overleafType, setOverleafType] = useState<
     "backingSheet" | "infoSheet"
   >("backingSheet");
+  const [paperType, setPaper] = useState<"A4" | "Letter">("A4");
 
   const handleOverleafTypeChange = (type: "backingSheet" | "infoSheet") => {
     setOverleafType(type);
@@ -51,6 +52,24 @@ export function ScriptControls({
       onOptionChange("overleaf", overleafType);
     } else {
       onOptionChange("overleaf", "none");
+    }
+  };
+
+  const handlePaperChange = (paper: "A4" | "Letter") => {
+    if (paper === "A4") {
+      setPaper("A4");
+      onOptionChange("dimensions", {
+        ...options.dimensions,
+        width: 210,
+        height: 297,
+      });
+    } else {
+      setPaper("Letter");
+      onOptionChange("dimensions", {
+        ...options.dimensions,
+        width: 216,
+        height: 279,
+      });
     }
   };
 
@@ -550,6 +569,69 @@ export function ScriptControls({
                       </div>
                     </div>
                   )}
+
+                  <div className="options-subsection">
+                    <label className="control-group-label">Print Options</label>
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <span className="toggle-text">Paper Type:</span>
+                        <select
+                          value={paperType}
+                          onChange={(e) =>
+                            handlePaperChange(
+                              (e.target as HTMLSelectElement).value as
+                                | "A4"
+                                | "Letter"
+                            )
+                          }
+                          className="toggle-input"
+                        >
+                          <option value="A4">A4</option>
+                          <option value="Letter">Letter</option>
+                        </select>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <span className="toggle-text">Print Margin (mm):</span>
+                        <input
+                          type="number"
+                          min={0}
+                          value={options.dimensions.margin}
+                          onChange={(e) =>
+                            onOptionChange("dimensions", {
+                              ...options.dimensions,
+                              margin: parseInt(
+                                (e.target as HTMLInputElement).value
+                              ),
+                            })
+                          }
+                          className="number-input"
+                        ></input>
+                      </label>
+                    </div>
+
+                    <div className="toggle-section">
+                      <label className="toggle-label">
+                        <span className="toggle-text">Bleed (mm):</span>
+                        <input
+                          type="number"
+                          min={0}
+                          value={options.dimensions.bleed}
+                          onChange={(e) =>
+                            onOptionChange("dimensions", {
+                              ...options.dimensions,
+                              bleed: parseInt(
+                                (e.target as HTMLInputElement).value
+                              ),
+                            })
+                          }
+                          className="number-input"
+                        ></input>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
 
