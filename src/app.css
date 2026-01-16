@@ -516,7 +516,6 @@ select.toggle-input:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
 }
 
 .placeholder {
