@@ -7,6 +7,13 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-01-16",
+    changes: [
+      "Add print dimensions options to customize the size and margins of the character sheets for printing.",
+      "Add support for Letter paper size, used by countries such as Canada, the Phillippines and the USA.",
+    ],
+  },
+  {
     date: "2026-01-14",
     changes: [
       "Added the option to have an info sheet on the back of the character sheet, which can display night order, jinxes, recommended travellers and base player counts, similar to the official script tool.",
