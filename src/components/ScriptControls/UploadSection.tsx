@@ -9,6 +9,7 @@ export function UploadSection({
   onFileUpload,
   onLoadExample,
 }: UploadSectionProps) {
+  const isMac = navigator.userAgent.includes("Mac");
   return (
     <>
       <div className="upload-section">
@@ -23,7 +24,9 @@ export function UploadSection({
           className="file-input"
         />
         <div className="or">or</div>
-        <div className="paste-hint">Paste directly with ctrl+V / ⌘+V</div>
+        <div className="paste-hint">
+          Paste directly with {isMac ? "⌘" : "ctrl"}+V
+        </div>
       </div>
 
       {!hasScript && (

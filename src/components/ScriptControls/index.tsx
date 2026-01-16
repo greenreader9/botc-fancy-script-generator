@@ -5,8 +5,7 @@ import { UploadSection } from "./UploadSection";
 import { ColorPicker } from "./ColorPicker";
 import { AppearanceOptions } from "./AppearanceOptions";
 import { CharacterSheetOptions } from "./CharacterSheetOptions";
-import { BackingSheetOptions } from "./BackingSheetOptions";
-import { InfoSheetOptions } from "./InfoSheetOptions";
+import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
 import { ActionButtons } from "./ActionButtons";
 
@@ -46,23 +45,7 @@ export function ScriptControls({
   onGeneratePDF,
   onPrint,
 }: ScriptControlsProps) {
-  const [overleafType, setOverleafType] = useState<
-    "backingSheet" | "infoSheet"
-  >("backingSheet");
   const [paperType, setPaperType] = useState<"A4" | "Letter">("A4");
-
-  const handleOverleafTypeChange = (type: "backingSheet" | "infoSheet") => {
-    setOverleafType(type);
-    onOptionChange("overleaf", type);
-  };
-
-  const handleDoubleSidedChange = (enabled: boolean) => {
-    if (enabled) {
-      onOptionChange("overleaf", overleafType);
-    } else {
-      onOptionChange("overleaf", "none");
-    }
-  };
 
   const handlePaperChange = (paper: "A4" | "Letter") => {
     if (paper === "A4") {
@@ -109,123 +92,106 @@ export function ScriptControls({
               onPrint={onPrint}
             />
 
-            <CollapsibleSection title="Appearance">
-                  <ColorPicker
-                    color={options.color}
-                    onColorChange={onColorChange}
-                    onColorArrayChange={onColorArrayChange}
-                    onAddColor={onAddColor}
-                    onRemoveColor={onRemoveColor}
-                  />
-                  <AppearanceOptions
-                    includeMargins={options.includeMargins}
-                    overleaf={options.overleaf}
-                    overleafType={overleafType}
-                    showNightSheet={options.showNightSheet}
-                    onIncludeMarginsChange={(value) =>
-                      onOptionChange("includeMargins", value)
-                    }
-                    onDoubleSidedChange={handleDoubleSidedChange}
-                    onOverleafTypeChange={handleOverleafTypeChange}
-                    onShowNightSheetChange={(value) =>
-                      onOptionChange("showNightSheet", value)
-                    }
-                  />
-                </CollapsibleSection>
+            <CollapsibleSection title="General">
+              <ColorPicker
+                color={options.color}
+                onColorChange={onColorChange}
+                onColorArrayChange={onColorArrayChange}
+                onAddColor={onAddColor}
+                onRemoveColor={onRemoveColor}
+              />
+              <AppearanceOptions
+                showNightSheet={options.showNightSheet}
+                onShowNightSheetChange={(value) =>
+                  onOptionChange("showNightSheet", value)
+                }
+              />
+            </CollapsibleSection>
 
-                <CollapsibleSection title="Character Sheet">
-                  <CharacterSheetOptions
-                    numberOfCharacterSheets={options.numberOfCharacterSheets}
-                    appearance={options.appearance}
-                    showAuthor={options.showAuthor}
-                    showJinxes={options.showJinxes}
-                    inlineJinxIcons={options.inlineJinxIcons}
-                    useOldJinxes={options.useOldJinxes}
-                    showSwirls={options.showSwirls}
-                    solidTitle={options.solidTitle}
-                    iconScale={options.iconScale}
-                    onNumberOfSheetsChange={(value) =>
-                      onOptionChange("numberOfCharacterSheets", value)
-                    }
-                    onAppearanceChange={(value) =>
-                      onOptionChange("appearance", value)
-                    }
-                    onShowAuthorChange={(value) =>
-                      onOptionChange("showAuthor", value)
-                    }
-                    onShowJinxesChange={(value) =>
-                      onOptionChange("showJinxes", value)
-                    }
-                    onInlineJinxIconsChange={(value) =>
-                      onOptionChange("inlineJinxIcons", value)
-                    }
-                    onUseOldJinxesChange={(value) =>
-                      onOptionChange("useOldJinxes", value)
-                    }
-                    onShowSwirlsChange={(value) =>
-                      onOptionChange("showSwirls", value)
-                    }
-                    onSolidTitleChange={(value) =>
-                      onOptionChange("solidTitle", value)
-                    }
-                    onIconScaleChange={(value) =>
-                      onOptionChange("iconScale", value)
-                    }
-                  />
-                </CollapsibleSection>
+            <CollapsibleSection title="Character Sheet" defaultOpen={false}>
+              <CharacterSheetOptions
+                overleaf={options.overleaf}
+                appearance={options.appearance}
+                showAuthor={options.showAuthor}
+                showJinxes={options.showJinxes}
+                inlineJinxIcons={options.inlineJinxIcons}
+                useOldJinxes={options.useOldJinxes}
+                showSwirls={options.showSwirls}
+                solidTitle={options.solidTitle}
+                iconScale={options.iconScale}
+                onOverleafChange={(value) => onOptionChange("overleaf", value)}
+                onAppearanceChange={(value) =>
+                  onOptionChange("appearance", value)
+                }
+                onShowAuthorChange={(value) =>
+                  onOptionChange("showAuthor", value)
+                }
+                onShowJinxesChange={(value) =>
+                  onOptionChange("showJinxes", value)
+                }
+                onInlineJinxIconsChange={(value) =>
+                  onOptionChange("inlineJinxIcons", value)
+                }
+                onUseOldJinxesChange={(value) =>
+                  onOptionChange("useOldJinxes", value)
+                }
+                onShowSwirlsChange={(value) =>
+                  onOptionChange("showSwirls", value)
+                }
+                onSolidTitleChange={(value) =>
+                  onOptionChange("solidTitle", value)
+                }
+                onIconScaleChange={(value) =>
+                  onOptionChange("iconScale", value)
+                }
+              />
+            </CollapsibleSection>
 
-                {options.overleaf === "backingSheet" && (
-                  <CollapsibleSection title="Backing Sheet">
-                    <BackingSheetOptions
-                      displayNightOrder={options.displayNightOrder}
-                      displayPlayerCounts={options.displayPlayerCounts}
-                      formatMinorWords={options.formatMinorWords}
-                      onDisplayNightOrderChange={(value) =>
-                        onOptionChange("displayNightOrder", value)
-                      }
-                      onDisplayPlayerCountsChange={(value) =>
-                        onOptionChange("displayPlayerCounts", value)
-                      }
-                      onFormatMinorWordsChange={(value) =>
-                        onOptionChange("formatMinorWords", value)
-                      }
-                    />
-                  </CollapsibleSection>
-                )}
+            {options.overleaf !== "none" && (
+              <CollapsibleSection
+                title="Character Sheet Back"
+                defaultOpen={false}
+              >
+                <CharacterSheetBackOptions
+                  overleaf={options.overleaf}
+                  displayNightOrder={options.displayNightOrder}
+                  displayPlayerCounts={options.displayPlayerCounts}
+                  formatMinorWords={options.formatMinorWords}
+                  onDisplayNightOrderChange={(value) =>
+                    onOptionChange("displayNightOrder", value)
+                  }
+                  onDisplayPlayerCountsChange={(value) =>
+                    onOptionChange("displayPlayerCounts", value)
+                  }
+                  onFormatMinorWordsChange={(value) =>
+                    onOptionChange("formatMinorWords", value)
+                  }
+                />
+              </CollapsibleSection>
+            )}
 
-                {options.overleaf === "infoSheet" && (
-                  <CollapsibleSection title="Info Sheet">
-                    <InfoSheetOptions
-                      displayNightOrder={options.displayNightOrder}
-                      displayPlayerCounts={options.displayPlayerCounts}
-                      onDisplayNightOrderChange={(value) =>
-                        onOptionChange("displayNightOrder", value)
-                      }
-                      onDisplayPlayerCountsChange={(value) =>
-                        onOptionChange("displayPlayerCounts", value)
-                      }
-                    />
-                  </CollapsibleSection>
-                )}
-
-                <CollapsibleSection title="Print Options">
-                  <PrintOptions
-                    paperType={paperType}
-                    dimensions={options.dimensions}
-                    onPaperChange={handlePaperChange}
-                    onMarginChange={(value) =>
-                      onOptionChange("dimensions", {
-                        ...options.dimensions,
-                        margin: value,
-                      })
-                    }
-                    onBleedChange={(value) =>
-                      onOptionChange("dimensions", {
-                        ...options.dimensions,
-                        bleed: value,
-                      })
-                    }
-                  />
+            <CollapsibleSection title="Print Options" defaultOpen={false}>
+              <PrintOptions
+                numberOfCharacterSheets={options.numberOfCharacterSheets}
+                paperType={paperType}
+                dimensions={options.dimensions}
+                onNumberOfCharacterSheetsChange={(value) =>
+                  onOptionChange("numberOfCharacterSheets", value)
+                }
+                onPaperChange={handlePaperChange}
+                onMarginChange={(value) =>
+                  onOptionChange("dimensions", {
+                    ...options.dimensions,
+                    margin: value,
+                  })
+                }
+                onBleedChange={(value) =>
+                  onOptionChange("dimensions", {
+                    ...options.dimensions,
+                    bleed: value,
+                  })
+                }
+              />
             </CollapsibleSection>
           </>
         )}

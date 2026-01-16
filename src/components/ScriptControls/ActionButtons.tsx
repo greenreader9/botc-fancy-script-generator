@@ -31,7 +31,13 @@ export function ActionButtons({
       </div>
 
       <p className="browser-print-note">
-        Browser Print only works reliably in Chromium-based browsers (Chrome, Edge, Brave, etc.)
+        Browser Print only works reliably in Chromium-based browsers
+        <br />
+        (Chrome, Edge, Brave, etc.)
+      </p>
+      <p className="browser-print-note">
+        Produced PDFs don't work with some readers (eg. MacOS Preview). If you
+        have issues, try opening the PDF in a different reader or browser.
       </p>
 
       {!isScriptSorted && (

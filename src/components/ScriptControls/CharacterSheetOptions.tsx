@@ -1,7 +1,7 @@
-import { Toggle, Select, NumberInput, Slider } from "../ui";
+import { Toggle, Select, Slider } from "../ui";
 
 interface CharacterSheetOptionsProps {
-  numberOfCharacterSheets: number;
+  overleaf: "none" | "backingSheet" | "infoSheet";
   appearance: "normal" | "compact" | "super-compact" | "mega-compact";
   showAuthor: boolean;
   showJinxes: boolean;
@@ -10,7 +10,7 @@ interface CharacterSheetOptionsProps {
   showSwirls: boolean;
   solidTitle: boolean;
   iconScale: number;
-  onNumberOfSheetsChange: (value: number) => void;
+  onOverleafChange: (value: "none" | "backingSheet" | "infoSheet") => void;
   onAppearanceChange: (
     value: "normal" | "compact" | "super-compact" | "mega-compact"
   ) => void;
@@ -24,7 +24,7 @@ interface CharacterSheetOptionsProps {
 }
 
 export function CharacterSheetOptions({
-  numberOfCharacterSheets,
+  overleaf,
   appearance,
   showAuthor,
   showJinxes,
@@ -33,7 +33,7 @@ export function CharacterSheetOptions({
   showSwirls,
   solidTitle,
   iconScale,
-  onNumberOfSheetsChange,
+  onOverleafChange,
   onAppearanceChange,
   onShowAuthorChange,
   onShowJinxesChange,
@@ -45,11 +45,17 @@ export function CharacterSheetOptions({
 }: CharacterSheetOptionsProps) {
   return (
     <>
-      <NumberInput
-        label="Number of Sheets:"
-        value={numberOfCharacterSheets}
-        min={1}
-        onChange={onNumberOfSheetsChange}
+      <Select
+        label="Overleaf:"
+        value={overleaf}
+        options={[
+          { value: "backingSheet", label: "Backing Sheet" },
+          { value: "infoSheet", label: "Info Sheet" },
+          { value: "none", label: "None" },
+        ]}
+        onChange={(value) =>
+          onOverleafChange(value as "none" | "backingSheet" | "infoSheet")
+        }
       />
 
       <Select
@@ -75,6 +81,12 @@ export function CharacterSheetOptions({
       />
 
       <Toggle
+        label="Show Swirls"
+        checked={showSwirls}
+        onChange={onShowSwirlsChange}
+      />
+
+      <Toggle
         label="Show Jinxes"
         checked={showJinxes}
         onChange={onShowJinxesChange}
@@ -90,12 +102,6 @@ export function CharacterSheetOptions({
         label="Use Old Jinxes"
         checked={useOldJinxes}
         onChange={onUseOldJinxesChange}
-      />
-
-      <Toggle
-        label="Show Swirls"
-        checked={showSwirls}
-        onChange={onShowSwirlsChange}
       />
 
       <Toggle

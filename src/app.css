@@ -220,6 +220,8 @@ a:visited {
   opacity: 0.7;
   font-style: italic;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .or {
@@ -258,10 +260,15 @@ a:visited {
 }
 
 .action-buttons .print-button.primary {
-  background: linear-gradient(135deg, var(--button-bg) 0%, var(--button-hover) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--button-bg) 0%,
+    var(--button-hover) 100%
+  );
 }
 
-.browser-print-note {
+.browser-print-note,
+.print-options-hint {
   font-size: 12px;
   color: var(--text-tertiary);
   text-align: center;
@@ -457,11 +464,13 @@ select.toggle-input:focus {
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 8px var(--warning-border), 0 2px 6px var(--shadow-light);
   }
   50% {
-    box-shadow: 0 0 16px var(--warning-border), 0 0 24px var(--warning-border), 0 2px 6px var(--shadow-light);
+    box-shadow: 0 0 16px var(--warning-border), 0 0 24px var(--warning-border),
+      0 2px 6px var(--shadow-light);
   }
 }
 
@@ -825,7 +834,6 @@ select.toggle-input:focus {
 .collapsible-section {
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  margin-bottom: 6px;
   background: var(--card-bg);
 }
 

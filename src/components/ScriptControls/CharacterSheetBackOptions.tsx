@@ -1,18 +1,24 @@
 import { Toggle } from "../ui";
 
-interface InfoSheetOptionsProps {
+interface CharacterSheetBackOptionsProps {
+  overleaf: "none" | "backingSheet" | "infoSheet";
   displayNightOrder: boolean;
   displayPlayerCounts: boolean;
+  formatMinorWords: boolean;
   onDisplayNightOrderChange: (value: boolean) => void;
   onDisplayPlayerCountsChange: (value: boolean) => void;
+  onFormatMinorWordsChange: (value: boolean) => void;
 }
 
-export function InfoSheetOptions({
+export function CharacterSheetBackOptions({
+  overleaf,
   displayNightOrder,
   displayPlayerCounts,
+  formatMinorWords,
   onDisplayNightOrderChange,
   onDisplayPlayerCountsChange,
-}: InfoSheetOptionsProps) {
+  onFormatMinorWordsChange,
+}: CharacterSheetBackOptionsProps) {
   return (
     <>
       <Toggle
@@ -25,6 +31,14 @@ export function InfoSheetOptions({
         checked={displayPlayerCounts}
         onChange={onDisplayPlayerCountsChange}
       />
+
+      {overleaf === "backingSheet" && (
+        <Toggle
+          label="Shrink Minor Words"
+          checked={formatMinorWords}
+          onChange={onFormatMinorWordsChange}
+        />
+      )}
     </>
   );
 }
