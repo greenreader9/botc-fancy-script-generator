@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "preact/hooks";
-import type { ScriptOptions, ParsedScript } from "botc-character-sheet";
-import { PageDimensions } from "../../../botc-character-sheet/dist/types";
+import type {
+  ScriptOptions,
+  ParsedScript,
+  PageDimensions,
+} from "botc-character-sheet";
 
 type Appearance = "normal" | "compact" | "super-compact" | "mega-compact";
 
