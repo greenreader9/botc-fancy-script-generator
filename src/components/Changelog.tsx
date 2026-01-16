@@ -11,6 +11,7 @@ const CHANGELOG_ENTRIES: ChangelogEntry[] = [
     changes: [
       "Add print dimensions options to customize the size and margins of the character sheets for printing.",
       "Add support for Letter paper size, used by countries such as Canada, the Phillippines and the USA.",
+      "Improve UI to make it cleaner and less cluttered",
     ],
   },
   {
