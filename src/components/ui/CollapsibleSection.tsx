@@ -15,7 +15,7 @@ export function CollapsibleSection({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="collapsible-section">
+    <div className={`collapsible-section ${isOpen ? "open" : ""}`}>
       <button
         type="button"
         className="collapsible-header"
@@ -36,7 +36,9 @@ export function CollapsibleSection({
           </svg>
         </span>
       </button>
-      {isOpen && <div className="collapsible-content">{children}</div>}
+      <div className="collapsible-content-wrapper">
+        <div className="collapsible-content">{children}</div>
+      </div>
     </div>
   );
 }

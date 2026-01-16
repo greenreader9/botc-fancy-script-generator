@@ -158,6 +158,7 @@ export function App() {
             hasScript={!!script}
             options={options}
             isScriptSorted={isScriptSorted}
+            error={error}
             onFileUpload={handleFileUpload}
             onLoadExample={handleLoadExample}
             onColorChange={handleColorChange}
@@ -173,7 +174,6 @@ export function App() {
           {script && (
             <ScriptEditor
               scriptText={scriptText}
-              error={error}
               onScriptChange={handleScriptChange}
               onSave={handleSaveScript}
             />

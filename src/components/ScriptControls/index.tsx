@@ -14,6 +14,7 @@ interface ScriptControlsProps {
   hasScript: boolean;
   options: ScriptOptions;
   isScriptSorted: boolean;
+  error: string | null;
   onFileUpload: (event: Event) => void;
   onLoadExample: () => void;
   onColorChange: (color: string | string[]) => void;
@@ -33,6 +34,7 @@ export function ScriptControls({
   hasScript,
   options,
   isScriptSorted,
+  error,
   onFileUpload,
   onLoadExample,
   onColorChange,
@@ -99,146 +101,135 @@ export function ScriptControls({
               If you have any feedback, please let me know{" "}
               <a href="https://forms.gle/z1yeAW7x91X4Uc4H8">here</a>.
             </p>
-            <div className="controls-grid">
-              <div className="control-group">
-                <div className="control-group-content">
-                  <CollapsibleSection title="Appearance">
-                    <ColorPicker
-                      color={options.color}
-                      onColorChange={onColorChange}
-                      onColorArrayChange={onColorArrayChange}
-                      onAddColor={onAddColor}
-                      onRemoveColor={onRemoveColor}
-                    />
-                    <AppearanceOptions
-                      includeMargins={options.includeMargins}
-                      overleaf={options.overleaf}
-                      overleafType={overleafType}
-                      showNightSheet={options.showNightSheet}
-                      onIncludeMarginsChange={(value) =>
-                        onOptionChange("includeMargins", value)
-                      }
-                      onDoubleSidedChange={handleDoubleSidedChange}
-                      onOverleafTypeChange={handleOverleafTypeChange}
-                      onShowNightSheetChange={(value) =>
-                        onOptionChange("showNightSheet", value)
-                      }
-                    />
-                  </CollapsibleSection>
+            <ActionButtons
+              isScriptSorted={isScriptSorted}
+              error={error}
+              onSort={onSort}
+              onGeneratePDF={onGeneratePDF}
+              onPrint={onPrint}
+            />
 
-                  <CollapsibleSection title="Character Sheet">
-                    <CharacterSheetOptions
-                      numberOfCharacterSheets={options.numberOfCharacterSheets}
-                      appearance={options.appearance}
-                      showAuthor={options.showAuthor}
-                      showJinxes={options.showJinxes}
-                      inlineJinxIcons={options.inlineJinxIcons}
-                      useOldJinxes={options.useOldJinxes}
-                      showSwirls={options.showSwirls}
-                      solidTitle={options.solidTitle}
-                      iconScale={options.iconScale}
-                      onNumberOfSheetsChange={(value) =>
-                        onOptionChange("numberOfCharacterSheets", value)
-                      }
-                      onAppearanceChange={(value) =>
-                        onOptionChange("appearance", value)
-                      }
-                      onShowAuthorChange={(value) =>
-                        onOptionChange("showAuthor", value)
-                      }
-                      onShowJinxesChange={(value) =>
-                        onOptionChange("showJinxes", value)
-                      }
-                      onInlineJinxIconsChange={(value) =>
-                        onOptionChange("inlineJinxIcons", value)
-                      }
-                      onUseOldJinxesChange={(value) =>
-                        onOptionChange("useOldJinxes", value)
-                      }
-                      onShowSwirlsChange={(value) =>
-                        onOptionChange("showSwirls", value)
-                      }
-                      onSolidTitleChange={(value) =>
-                        onOptionChange("solidTitle", value)
-                      }
-                      onIconScaleChange={(value) =>
-                        onOptionChange("iconScale", value)
-                      }
-                    />
-                  </CollapsibleSection>
+            <CollapsibleSection title="Appearance">
+                  <ColorPicker
+                    color={options.color}
+                    onColorChange={onColorChange}
+                    onColorArrayChange={onColorArrayChange}
+                    onAddColor={onAddColor}
+                    onRemoveColor={onRemoveColor}
+                  />
+                  <AppearanceOptions
+                    includeMargins={options.includeMargins}
+                    overleaf={options.overleaf}
+                    overleafType={overleafType}
+                    showNightSheet={options.showNightSheet}
+                    onIncludeMarginsChange={(value) =>
+                      onOptionChange("includeMargins", value)
+                    }
+                    onDoubleSidedChange={handleDoubleSidedChange}
+                    onOverleafTypeChange={handleOverleafTypeChange}
+                    onShowNightSheetChange={(value) =>
+                      onOptionChange("showNightSheet", value)
+                    }
+                  />
+                </CollapsibleSection>
 
-                  {options.overleaf === "backingSheet" && (
-                    <CollapsibleSection title="Backing Sheet">
-                      <BackingSheetOptions
-                        displayNightOrder={options.displayNightOrder}
-                        displayPlayerCounts={options.displayPlayerCounts}
-                        formatMinorWords={options.formatMinorWords}
-                        onDisplayNightOrderChange={(value) =>
-                          onOptionChange("displayNightOrder", value)
-                        }
-                        onDisplayPlayerCountsChange={(value) =>
-                          onOptionChange("displayPlayerCounts", value)
-                        }
-                        onFormatMinorWordsChange={(value) =>
-                          onOptionChange("formatMinorWords", value)
-                        }
-                      />
-                    </CollapsibleSection>
-                  )}
+                <CollapsibleSection title="Character Sheet">
+                  <CharacterSheetOptions
+                    numberOfCharacterSheets={options.numberOfCharacterSheets}
+                    appearance={options.appearance}
+                    showAuthor={options.showAuthor}
+                    showJinxes={options.showJinxes}
+                    inlineJinxIcons={options.inlineJinxIcons}
+                    useOldJinxes={options.useOldJinxes}
+                    showSwirls={options.showSwirls}
+                    solidTitle={options.solidTitle}
+                    iconScale={options.iconScale}
+                    onNumberOfSheetsChange={(value) =>
+                      onOptionChange("numberOfCharacterSheets", value)
+                    }
+                    onAppearanceChange={(value) =>
+                      onOptionChange("appearance", value)
+                    }
+                    onShowAuthorChange={(value) =>
+                      onOptionChange("showAuthor", value)
+                    }
+                    onShowJinxesChange={(value) =>
+                      onOptionChange("showJinxes", value)
+                    }
+                    onInlineJinxIconsChange={(value) =>
+                      onOptionChange("inlineJinxIcons", value)
+                    }
+                    onUseOldJinxesChange={(value) =>
+                      onOptionChange("useOldJinxes", value)
+                    }
+                    onShowSwirlsChange={(value) =>
+                      onOptionChange("showSwirls", value)
+                    }
+                    onSolidTitleChange={(value) =>
+                      onOptionChange("solidTitle", value)
+                    }
+                    onIconScaleChange={(value) =>
+                      onOptionChange("iconScale", value)
+                    }
+                  />
+                </CollapsibleSection>
 
-                  {options.overleaf === "infoSheet" && (
-                    <CollapsibleSection title="Info Sheet">
-                      <InfoSheetOptions
-                        displayNightOrder={options.displayNightOrder}
-                        displayPlayerCounts={options.displayPlayerCounts}
-                        onDisplayNightOrderChange={(value) =>
-                          onOptionChange("displayNightOrder", value)
-                        }
-                        onDisplayPlayerCountsChange={(value) =>
-                          onOptionChange("displayPlayerCounts", value)
-                        }
-                      />
-                    </CollapsibleSection>
-                  )}
-
-                  <CollapsibleSection title="Print Options">
-                    <PrintOptions
-                      paperType={paperType}
-                      dimensions={options.dimensions}
-                      onPaperChange={handlePaperChange}
-                      onMarginChange={(value) =>
-                        onOptionChange("dimensions", {
-                          ...options.dimensions,
-                          margin: value,
-                        })
+                {options.overleaf === "backingSheet" && (
+                  <CollapsibleSection title="Backing Sheet">
+                    <BackingSheetOptions
+                      displayNightOrder={options.displayNightOrder}
+                      displayPlayerCounts={options.displayPlayerCounts}
+                      formatMinorWords={options.formatMinorWords}
+                      onDisplayNightOrderChange={(value) =>
+                        onOptionChange("displayNightOrder", value)
                       }
-                      onBleedChange={(value) =>
-                        onOptionChange("dimensions", {
-                          ...options.dimensions,
-                          bleed: value,
-                        })
+                      onDisplayPlayerCountsChange={(value) =>
+                        onOptionChange("displayPlayerCounts", value)
+                      }
+                      onFormatMinorWordsChange={(value) =>
+                        onOptionChange("formatMinorWords", value)
                       }
                     />
                   </CollapsibleSection>
-                </div>
-              </div>
+                )}
 
-              <ActionButtons
-                onSort={onSort}
-                onGeneratePDF={onGeneratePDF}
-                onPrint={onPrint}
-              />
-            </div>
+                {options.overleaf === "infoSheet" && (
+                  <CollapsibleSection title="Info Sheet">
+                    <InfoSheetOptions
+                      displayNightOrder={options.displayNightOrder}
+                      displayPlayerCounts={options.displayPlayerCounts}
+                      onDisplayNightOrderChange={(value) =>
+                        onOptionChange("displayNightOrder", value)
+                      }
+                      onDisplayPlayerCountsChange={(value) =>
+                        onOptionChange("displayPlayerCounts", value)
+                      }
+                    />
+                  </CollapsibleSection>
+                )}
+
+                <CollapsibleSection title="Print Options">
+                  <PrintOptions
+                    paperType={paperType}
+                    dimensions={options.dimensions}
+                    onPaperChange={handlePaperChange}
+                    onMarginChange={(value) =>
+                      onOptionChange("dimensions", {
+                        ...options.dimensions,
+                        margin: value,
+                      })
+                    }
+                    onBleedChange={(value) =>
+                      onOptionChange("dimensions", {
+                        ...options.dimensions,
+                        bleed: value,
+                      })
+                    }
+                  />
+            </CollapsibleSection>
           </>
         )}
       </div>
-
-      {!isScriptSorted && hasScript && (
-        <div className="warning-message">
-          <strong>⚠️ Script Not Sorted:</strong> This script doesn't follow the
-          official sorting order. Click "Sort Script" to fix this.
-        </div>
-      )}
     </>
   );
 }
