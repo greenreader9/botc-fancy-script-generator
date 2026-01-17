@@ -281,7 +281,7 @@ a:visited {
   font-style: italic;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .action-buttons {
     flex-direction: column;
   }
@@ -784,7 +784,7 @@ select.toggle-input:focus {
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .pdf-preview {
     height: 400px;
   }
@@ -907,6 +907,122 @@ select.toggle-input:focus {
   width: 100%;
   cursor: pointer;
   accent-color: var(--button-bg);
+}
+
+/* Mobile controls toggle - hidden by default on desktop */
+.mobile-controls-toggle {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  /* Stack layout vertically on mobile */
+  .app {
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+
+  /* Controls take full width on mobile */
+  .controls {
+    position: relative;
+    top: auto;
+    max-height: none;
+    width: 100%;
+    padding: 20px;
+    transition: transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease;
+  }
+
+  /* Collapsed state for controls on mobile (script loaded, controls hidden) */
+  .controls.mobile-collapsed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    max-height: 100vh;
+    overflow-y: auto;
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Expanded state for controls on mobile (script loaded, controls visible) */
+  .controls.mobile-expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 100;
+    border-radius: 0;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  /* Show toggle button on mobile */
+  .mobile-controls-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 10px;
+    left: 10px;
+    z-index: 101;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-bottom: -48px;
+  }
+
+  .mobile-controls-toggle:hover {
+    background: var(--button-hover);
+  }
+
+  .mobile-controls-toggle:active {
+    transform: scale(0.95);
+  }
+
+  .mobile-controls-toggle-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-controls-toggle-icon.open {
+    transform: rotate(90deg);
+  }
+
+  /* Adjust title size on mobile */
+  .app-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  /* Preview section adjustments */
+  .preview-section {
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .preview-section > * {
+    transform: scale(var(--mobile-preview-scale, 1));
+    transform-origin: top center;
+  }
+
+  /* Placeholder adjustments for mobile */
+  .placeholder {
+    min-width: auto;
+    width: 100%;
+    padding: 40px 20px;
+  }
 }
 
 @media print {

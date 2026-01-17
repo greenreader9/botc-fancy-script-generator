@@ -6,10 +6,12 @@ import exampleScript from "./data/example-script.json";
 import { useScriptLoader } from "./hooks/useScriptLoader";
 import { usePdfGeneration } from "./hooks/usePdfGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
+import { useMobileControls } from "./hooks/useMobileControls";
 import { ScriptControls } from "./components/ScriptControls";
 import { ScriptEditor } from "./components/ScriptEditor";
 import { PdfModal } from "./components/PdfModal";
 import { Changelog } from "./components/Changelog";
+import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { DEFAULT_OPTIONS, randomColor } from "./types/options";
 import "./app.css";
 import { ScriptOptions, FancyDoc } from "botc-character-sheet";
@@ -42,6 +44,15 @@ export function App() {
 
   const [options, setOptions] = useState<ScriptOptions>(DEFAULT_OPTIONS);
 
+  const {
+    isOpen: mobileControlsOpen,
+    toggle: toggleMobileControls,
+    controlsClassName,
+  } = useMobileControls({
+    sheetWidthMm: options.dimensions.width,
+    hasScript: !!script,
+  });
+
   // Auto-detect overflow and adjust compactness
   useOverflowDetection({
     options,
@@ -72,7 +83,7 @@ export function App() {
 
   const updateOption = <K extends keyof ScriptOptions>(
     key: K,
-    value: ScriptOptions[K]
+    value: ScriptOptions[K],
   ) => {
     setOptions((prev) => ({ ...prev, [key]: value }));
   };
@@ -122,7 +133,7 @@ export function App() {
       const newColorArray = options.color.filter((_, i) => i !== index);
       // If only one color left, convert back to string
       handleColorChange(
-        newColorArray.length === 1 ? newColorArray[0] : newColorArray
+        newColorArray.length === 1 ? newColorArray[0] : newColorArray,
       );
     }
   };
@@ -153,7 +164,13 @@ export function App() {
   return (
     <>
       <div className="app">
-        <div className="controls">
+        {script && (
+          <MobileControlsToggle
+            isOpen={mobileControlsOpen}
+            onToggle={toggleMobileControls}
+          />
+        )}
+        <div className={`controls ${controlsClassName}`}>
           <ScriptControls
             hasScript={!!script}
             options={options}
