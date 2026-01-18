@@ -1,9 +1,10 @@
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import { parseScript } from "../utils/scriptParser";
 import { sortScript } from "botc-script-checker";
 import type { Script } from "botc-script-checker";
 import { NightOrders, ParsedScript } from "botc-character-sheet";
 import { calculateNightOrders } from "../utils/nightOrders";
+import { downloadBlob } from "../utils/downloadFile";
 import JSON5 from "json5";
 
 export function useScriptLoader() {
@@ -16,6 +17,7 @@ export function useScriptLoader() {
     first: [],
     other: [],
   });
+  const parseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const checkIfSorted = (currentScript: Script): boolean => {
     try {
@@ -41,23 +43,27 @@ export function useScriptLoader() {
   const handleScriptTextChange = (newText: string) => {
     setScriptText(newText);
 
-    // Try to parse and update in real-time
-    try {
-      const json = JSON5.parse(newText);
-      setRawScript(json);
-      const parsed = parseScript(json);
-      setScript(parsed);
-      setIsScriptSorted(checkIfSorted(json));
-      setNightOrdersState(calculateNightOrders(parsed, json));
-      setError(null);
-
-      return parsed; // Return parsed script for color loading
-    } catch (err) {
-      console.error(err);
-      // Keep the error state but don't block typing
-      setError(err instanceof Error ? err.message : "Invalid JSON format");
-      return null;
+    // Clear any pending parse timeout
+    if (parseTimeoutRef.current) {
+      clearTimeout(parseTimeoutRef.current);
     }
+
+    // Debounce parsing to avoid expensive operations on every keystroke
+    parseTimeoutRef.current = setTimeout(() => {
+      try {
+        const json = JSON5.parse(newText);
+        setRawScript(json);
+        const parsed = parseScript(json);
+        setScript(parsed);
+        setIsScriptSorted(checkIfSorted(json));
+        setNightOrdersState(calculateNightOrders(parsed, json));
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        // Keep the error state but don't block typing
+        setError(err instanceof Error ? err.message : "Invalid JSON format");
+      }
+    }, 300);
   };
 
   const handleFileUpload = (event: Event) => {
@@ -111,14 +117,7 @@ export function useScriptLoader() {
 
     // Create blob and download
     const blob = new Blob([scriptText], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadBlob(blob, filename);
   };
 
   // Setup paste event listener
@@ -150,6 +149,15 @@ export function useScriptLoader() {
       document.title = "Blood on the Clocktower - Script PDF Maker";
     }
   }, [script?.metadata?.name]);
+
+  // Cleanup parse timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (parseTimeoutRef.current) {
+        clearTimeout(parseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return {
     script,

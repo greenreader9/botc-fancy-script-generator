@@ -14,9 +14,9 @@ export function NumberInput({
   onChange,
 }: NumberInputProps) {
   return (
-    <div className="toggle-section">
-      <label className="toggle-label">
-        <span className="toggle-text">{label}</span>
+    <div className="form-control">
+      <label className="form-control-label">
+        <span className="form-control-text">{label}</span>
         <input
           type="number"
           value={value}

@@ -1,5 +1,16 @@
 import { ScriptOptions } from "botc-character-sheet";
 
+export type AppearanceLevel =
+  | "normal"
+  | "compact"
+  | "super-compact"
+  | "mega-compact";
+export type OverleafType = "none" | "backingSheet" | "infoSheet";
+export type PaperType = "A4" | "Letter";
+
+// Re-export PageDimensions from botc-character-sheet for convenience
+export type { PageDimensions } from "botc-character-sheet";
+
 export const randomColor = () => {
   const r = Math.floor(Math.random() * 256)
     .toString(16)

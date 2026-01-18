@@ -29,47 +29,30 @@ export function ColorPicker({
             type="color"
             value={color as string}
             onInput={(e) => onColorChange((e.target as HTMLInputElement).value)}
-            onChange={(e) => onColorChange((e.target as HTMLInputElement).value)}
             className="color-input"
           />
           <button
             onClick={() => onColorChange(randomColor())}
-            className="update-button"
-            style={{ fontSize: "17px", padding: "8px 16px" }}
+            className="update-button color-picker-icon-button"
           >
             🎲
           </button>
         </>
       ) : (
-        <div style={{ width: "100%" }}>
+        <div className="color-picker-gradient">
           {(color as string[]).map((c, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "8px",
-              }}
-            >
+            <div key={index} className="color-picker-row">
               <input
                 type="color"
                 value={c}
                 onInput={(e) =>
                   onColorArrayChange(index, (e.target as HTMLInputElement).value)
                 }
-                onChange={(e) =>
-                  onColorArrayChange(index, (e.target as HTMLInputElement).value)
-                }
                 className="color-input"
               />
               <button
                 onClick={() => onColorArrayChange(index, randomColor())}
-                className="update-button"
-                style={{
-                  fontSize: "17px",
-                  padding: "8px 16px",
-                }}
+                className="update-button color-picker-icon-button"
                 title="Randomize this color"
               >
                 🎲
@@ -77,11 +60,7 @@ export function ColorPicker({
               {(color as string[]).length > 1 && (
                 <button
                   onClick={() => onRemoveColor(index)}
-                  className="update-button"
-                  style={{
-                    fontSize: "14px",
-                    padding: "8px 16px",
-                  }}
+                  className="update-button color-picker-action-button"
                   title="Remove this color"
                 >
                   ×
@@ -91,12 +70,7 @@ export function ColorPicker({
           ))}
           <button
             onClick={onAddColor}
-            className="update-button"
-            style={{
-              fontSize: "14px",
-              padding: "8px 16px",
-              marginTop: "4px",
-            }}
+            className="update-button color-picker-add-button"
             title="Add another color"
           >
             + Add Color

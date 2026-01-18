@@ -1,8 +1,9 @@
 import { Toggle, Select, Slider } from "../ui";
+import { AppearanceLevel, OverleafType } from "../../types/options";
 
 interface CharacterSheetOptionsProps {
-  overleaf: "none" | "backingSheet" | "infoSheet";
-  appearance: "normal" | "compact" | "super-compact" | "mega-compact";
+  overleaf: OverleafType;
+  appearance: AppearanceLevel;
   showAuthor: boolean;
   showJinxes: boolean;
   inlineJinxIcons: boolean;
@@ -10,10 +11,8 @@ interface CharacterSheetOptionsProps {
   showSwirls: boolean;
   solidTitle: boolean;
   iconScale: number;
-  onOverleafChange: (value: "none" | "backingSheet" | "infoSheet") => void;
-  onAppearanceChange: (
-    value: "normal" | "compact" | "super-compact" | "mega-compact"
-  ) => void;
+  onOverleafChange: (value: OverleafType) => void;
+  onAppearanceChange: (value: AppearanceLevel) => void;
   onShowAuthorChange: (value: boolean) => void;
   onShowJinxesChange: (value: boolean) => void;
   onInlineJinxIconsChange: (value: boolean) => void;
@@ -53,9 +52,7 @@ export function CharacterSheetOptions({
           { value: "infoSheet", label: "Info Sheet" },
           { value: "none", label: "None" },
         ]}
-        onChange={(value) =>
-          onOverleafChange(value as "none" | "backingSheet" | "infoSheet")
-        }
+        onChange={(value) => onOverleafChange(value as OverleafType)}
       />
 
       <Select
@@ -67,11 +64,7 @@ export function CharacterSheetOptions({
           { value: "super-compact", label: "Smaller" },
           { value: "mega-compact", label: "Smallest" },
         ]}
-        onChange={(value) =>
-          onAppearanceChange(
-            value as "normal" | "compact" | "super-compact" | "mega-compact"
-          )
-        }
+        onChange={(value) => onAppearanceChange(value as AppearanceLevel)}
       />
 
       <Toggle

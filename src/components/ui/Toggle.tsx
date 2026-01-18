@@ -6,15 +6,15 @@ interface ToggleProps {
 
 export function Toggle({ label, checked, onChange }: ToggleProps) {
   return (
-    <div className="toggle-section">
-      <label className="toggle-label">
+    <div className="form-control">
+      <label className="form-control-label">
         <input
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange((e.target as HTMLInputElement).checked)}
-          className="toggle-input"
+          className="form-control-input"
         />
-        <span className="toggle-text">{label}</span>
+        <span className="form-control-text">{label}</span>
       </label>
     </div>
   );

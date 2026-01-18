@@ -31,9 +31,6 @@ export function Slider({
         onInput={(e) =>
           onChange(parseFloat((e.target as HTMLInputElement).value))
         }
-        onChange={(e) =>
-          onChange(parseFloat((e.target as HTMLInputElement).value))
-        }
         className="slider-input"
       />
     </div>

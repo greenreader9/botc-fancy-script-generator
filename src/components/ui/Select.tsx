@@ -7,13 +7,13 @@ interface SelectProps {
 
 export function Select({ label, value, options, onChange }: SelectProps) {
   return (
-    <div className="toggle-section">
-      <label className="toggle-label">
-        <span className="toggle-text">{label}</span>
+    <div className="form-control">
+      <label className="form-control-label">
+        <span className="form-control-text">{label}</span>
         <select
           value={value}
           onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
-          className="toggle-input"
+          className="form-control-input"
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>

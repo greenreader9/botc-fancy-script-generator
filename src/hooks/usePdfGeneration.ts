@@ -5,6 +5,7 @@ import {
   ParsedScript,
   ScriptOptions,
 } from "botc-character-sheet";
+import { downloadBlob } from "../utils/downloadFile";
 
 export function usePdfGeneration() {
   const [showPdfModal, setShowPdfModal] = useState(false);
@@ -65,15 +66,7 @@ export function usePdfGeneration() {
 
   const downloadPDF = (scriptName?: string) => {
     if (!pdfBlob) return;
-
-    const url = URL.createObjectURL(pdfBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${scriptName || "script"}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadBlob(pdfBlob, `${scriptName || "script"}.pdf`);
   };
 
   const closePdfModal = () => {

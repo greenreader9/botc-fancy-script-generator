@@ -1,18 +1,12 @@
 import { Select, NumberInput } from "../ui";
-
-interface Dimensions {
-  width: number;
-  height: number;
-  margin: number;
-  bleed: number;
-}
+import { PageDimensions, PaperType } from "../../types/options";
 
 interface PrintOptionsProps {
   numberOfCharacterSheets: number;
-  paperType: "A4" | "Letter";
-  dimensions: Dimensions;
+  paperType: PaperType;
+  dimensions: PageDimensions;
   onNumberOfCharacterSheetsChange: (value: number) => void;
-  onPaperChange: (paper: "A4" | "Letter") => void;
+  onPaperChange: (paper: PaperType) => void;
   onMarginChange: (margin: number) => void;
   onBleedChange: (bleed: number) => void;
 }
@@ -42,7 +36,7 @@ export function PrintOptions({
           { value: "A4", label: "A4" },
           { value: "Letter", label: "Letter" },
         ]}
-        onChange={(value) => onPaperChange(value as "A4" | "Letter")}
+        onChange={(value) => onPaperChange(value as PaperType)}
       />
 
       <NumberInput

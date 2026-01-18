@@ -1,5 +1,4 @@
 import { ScriptOptions } from "botc-character-sheet";
-import { useState } from "preact/hooks";
 import { CollapsibleSection } from "../ui";
 import { UploadSection } from "./UploadSection";
 import { ColorPicker } from "./ColorPicker";
@@ -8,6 +7,12 @@ import { CharacterSheetOptions } from "./CharacterSheetOptions";
 import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
 import { ActionButtons } from "./ActionButtons";
+import { PaperType } from "../../types/options";
+
+// Derive paper type from dimensions
+function getPaperType(width: number): PaperType {
+  return width === 216 ? "Letter" : "A4";
+}
 
 interface ScriptControlsProps {
   hasScript: boolean;
@@ -45,18 +50,17 @@ export function ScriptControls({
   onGeneratePDF,
   onPrint,
 }: ScriptControlsProps) {
-  const [paperType, setPaperType] = useState<"A4" | "Letter">("A4");
+  // Derive paper type from current dimensions
+  const paperType = getPaperType(options.dimensions.width);
 
-  const handlePaperChange = (paper: "A4" | "Letter") => {
+  const handlePaperChange = (paper: PaperType) => {
     if (paper === "A4") {
-      setPaperType("A4");
       onOptionChange("dimensions", {
         ...options.dimensions,
         width: 210,
         height: 297,
       });
     } else {
-      setPaperType("Letter");
       onOptionChange("dimensions", {
         ...options.dimensions,
         width: 216,
