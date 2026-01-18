@@ -788,6 +788,15 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
       "https://wiki.bloodontheclocktower.com/images/b/b4/Icon_hermit.png",
     id: "hermit",
   },
+  hindu: {
+    name: "Hindu",
+    ability:
+      "The first 4 players to die are immediately reincarnated as Travellers of the same alignment.",
+    team: "loric",
+    wiki_image:
+      "https://wiki.bloodontheclocktower.com/images/6/69/Icon_hindu.png",
+    id: "hindu",
+  },
   highpriestess: {
     name: "High Priestess",
     ability:
@@ -1263,6 +1272,15 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/a/a3/Icon_politician.png",
     id: "politician",
+  },
+  pope: {
+    name: "Pope",
+    ability:
+      "There are duplicate good characters in play. They might also be bluffs.",
+    team: "loric",
+    wiki_image:
+      "https://wiki.bloodontheclocktower.com/images/1/14/Icon_pope.png",
+    id: "pope",
   },
   poppygrower: {
     name: "Poppy Grower",
@@ -1802,6 +1820,15 @@ export const ALL_CHARACTERS: Record<string, ResolvedCharacter> = {
     wiki_image:
       "https://wiki.bloodontheclocktower.com/images/1/16/Icon_zealot.png",
     id: "zealot",
+  },
+  zenomancer: {
+    name: "Zenomancer",
+    ability:
+      "One or more players each have a goal. When achieved, that player learns a piece of true info.",
+    team: "loric",
+    wiki_image:
+      "https://wiki.bloodontheclocktower.com/images/4/44/Icon_zenomancer.png",
+    id: "zenomancer",
   },
   zombuul: {
     name: "Zombuul",
