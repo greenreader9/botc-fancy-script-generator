@@ -7,6 +7,10 @@ interface ChangelogEntry {
 
 const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    date: "2026-01-18",
+    changes: ["Add support for Zenomancer, Hindu and Pope lorics"],
+  },
+  {
     date: "2026-01-16",
     changes: [
       "Add print dimensions options to customize the size and margins of the character sheets for printing.",
