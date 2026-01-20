@@ -8,7 +8,6 @@ import { usePdfGeneration } from "./hooks/usePdfGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
 import { useMobileControls } from "./hooks/useMobileControls";
 import { ScriptControls } from "./components/ScriptControls";
-import { ScriptEditor } from "./components/ScriptEditor";
 import { PdfModal } from "./components/PdfModal";
 import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
