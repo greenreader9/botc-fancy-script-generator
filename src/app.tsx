@@ -176,6 +176,9 @@ export function App() {
             options={options}
             isScriptSorted={isScriptSorted}
             error={error}
+            scriptText={scriptText}
+            onScriptChange={handleScriptChange}
+            onSave={handleSaveScript}
             onFileUpload={handleFileUpload}
             onLoadExample={handleLoadExample}
             onColorChange={handleColorChange}
@@ -187,14 +190,6 @@ export function App() {
             onGeneratePDF={handleGeneratePDF}
             onPrint={handlePrint}
           />
-
-          {script && (
-            <ScriptEditor
-              scriptText={scriptText}
-              onScriptChange={handleScriptChange}
-              onSave={handleSaveScript}
-            />
-          )}
         </div>
 
         {script && (

@@ -8,6 +8,7 @@ import { CharacterSheetBackOptions } from "./CharacterSheetBackOptions";
 import { PrintOptions } from "./PrintOptions";
 import { ActionButtons } from "./ActionButtons";
 import { PaperType } from "../../types/options";
+import { ScriptEditor } from "../ScriptEditor";
 
 // Derive paper type from dimensions
 function getPaperType(width: number): PaperType {
@@ -18,6 +19,7 @@ interface ScriptControlsProps {
   hasScript: boolean;
   options: ScriptOptions;
   isScriptSorted: boolean;
+  scriptText: string;
   error: string | null;
   onFileUpload: (event: Event) => void;
   onLoadExample: () => void;
@@ -27,17 +29,20 @@ interface ScriptControlsProps {
   onRemoveColor: (index: number) => void;
   onOptionChange: <K extends keyof ScriptOptions>(
     key: K,
-    value: ScriptOptions[K]
+    value: ScriptOptions[K],
   ) => void;
   onSort: () => void;
   onGeneratePDF: () => void;
   onPrint: () => void;
+  onScriptChange: (text: string) => void;
+  onSave: () => void;
 }
 
 export function ScriptControls({
   hasScript,
   options,
   isScriptSorted,
+  scriptText,
   error,
   onFileUpload,
   onLoadExample,
@@ -49,8 +54,9 @@ export function ScriptControls({
   onSort,
   onGeneratePDF,
   onPrint,
+  onScriptChange,
+  onSave,
 }: ScriptControlsProps) {
-  // Derive paper type from current dimensions
   const paperType = getPaperType(options.dimensions.width);
 
   const handlePaperChange = (paper: PaperType) => {
@@ -195,6 +201,14 @@ export function ScriptControls({
                     bleed: value,
                   })
                 }
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Edit Script JSON" defaultOpen={false}>
+              <ScriptEditor
+                scriptText={scriptText}
+                onScriptChange={onScriptChange}
+                onSave={onSave}
               />
             </CollapsibleSection>
           </>

@@ -1,5 +1,3 @@
-import { CollapsibleSection } from "./ui";
-
 interface ScriptEditorProps {
   scriptText: string;
   onScriptChange: (text: string) => void;
@@ -12,22 +10,22 @@ export function ScriptEditor({
   onSave,
 }: ScriptEditorProps) {
   return (
-    <div className="script-editor-section">
-      <CollapsibleSection title="Edit Script JSON" defaultOpen={false}>
-        <div className="script-editor-buttons">
-          <button className="update-button">Update</button>
-          <button onClick={onSave} className="update-button">
-            Save
-          </button>
-        </div>
-        <textarea
-          className="script-editor-textarea"
-          value={scriptText}
-          onChange={(e) => onScriptChange((e.target as HTMLTextAreaElement).value)}
-          rows={20}
-          spellcheck={false}
-        />
-      </CollapsibleSection>
-    </div>
+    <>
+      <div className="script-editor-buttons">
+        <button className="update-button">Update</button>
+        <button onClick={onSave} className="update-button">
+          Save
+        </button>
+      </div>
+      <textarea
+        className="script-editor-textarea"
+        value={scriptText}
+        onChange={(e) =>
+          onScriptChange((e.target as HTMLTextAreaElement).value)
+        }
+        rows={20}
+        spellcheck={false}
+      />
+    </>
   );
 }
