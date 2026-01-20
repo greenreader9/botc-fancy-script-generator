@@ -124,7 +124,9 @@ export function useScriptLoader() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const scriptParam = params.get("script");
+    const scriptUrlParam = params.get("script_url");
 
+    // Prioritize inline script over URL
     if (scriptParam) {
       try {
         const decoded = decodeURIComponent(scriptParam);
@@ -136,6 +138,25 @@ export function useScriptLoader() {
           err instanceof Error ? err.message : "Failed to parse script from URL"
         );
       }
+    } else if (scriptUrlParam) {
+      const url = decodeURIComponent(scriptUrlParam);
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return response.text();
+        })
+        .then((text) => {
+          const json = JSON5.parse(text);
+          loadScript(json);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch script from URL:", err);
+          setError(
+            err instanceof Error ? err.message : "Failed to fetch script from URL"
+          );
+        });
     }
   }, []);
 
