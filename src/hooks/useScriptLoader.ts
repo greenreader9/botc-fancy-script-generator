@@ -120,6 +120,25 @@ export function useScriptLoader() {
     downloadBlob(blob, filename);
   };
 
+  // Load script from URL query parameter on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const scriptParam = params.get("script");
+
+    if (scriptParam) {
+      try {
+        const decoded = decodeURIComponent(scriptParam);
+        const json = JSON5.parse(decoded);
+        loadScript(json);
+      } catch (err) {
+        console.error("Failed to load script from URL:", err);
+        setError(
+          err instanceof Error ? err.message : "Failed to parse script from URL"
+        );
+      }
+    }
+  }, []);
+
   // Setup paste event listener
   useEffect(() => {
     const handlePaste = (event: ClipboardEvent) => {
