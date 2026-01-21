@@ -2,12 +2,14 @@ interface UploadSectionProps {
   hasScript: boolean;
   onFileUpload: (event: Event) => void;
   onLoadExample: () => void;
+  onLoadExampleTeensyville: () => void;
 }
 
 export function UploadSection({
   hasScript,
   onFileUpload,
   onLoadExample,
+  onLoadExampleTeensyville,
 }: UploadSectionProps) {
   const isMac = navigator.userAgent.includes("Mac");
   return (
@@ -33,6 +35,9 @@ export function UploadSection({
         <div className="example-section">
           <button onClick={onLoadExample} className="example-button">
             Load Example Script
+          </button>
+          <button onClick={onLoadExampleTeensyville} className="example-button">
+            Load Example Teensyville
           </button>
         </div>
       )}

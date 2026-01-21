@@ -23,6 +23,7 @@ interface ScriptControlsProps {
   error: string | null;
   onFileUpload: (event: Event) => void;
   onLoadExample: () => void;
+  onLoadExampleTeensyville: () => void;
   onColorChange: (color: string | string[]) => void;
   onColorArrayChange: (index: number, color: string) => void;
   onAddColor: () => void;
@@ -46,6 +47,7 @@ export function ScriptControls({
   error,
   onFileUpload,
   onLoadExample,
+  onLoadExampleTeensyville,
   onColorChange,
   onColorArrayChange,
   onAddColor,
@@ -86,6 +88,7 @@ export function ScriptControls({
           hasScript={hasScript}
           onFileUpload={onFileUpload}
           onLoadExample={onLoadExample}
+          onLoadExampleTeensyville={onLoadExampleTeensyville}
         />
 
         {hasScript && (
@@ -115,6 +118,8 @@ export function ScriptControls({
                 onShowNightSheetChange={(value) =>
                   onOptionChange("showNightSheet", value)
                 }
+                teensyMode={options.teensy}
+                onTeensyModeChange={(value) => onOptionChange("teensy", value)}
               />
             </CollapsibleSection>
 

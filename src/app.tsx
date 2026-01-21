@@ -3,6 +3,7 @@ import "botc-character-sheet/style.css";
 import { logUsage } from "./utils/logger";
 import type { Script } from "botc-script-checker";
 import exampleScript from "./data/example-script.json";
+import exampleTeensyville from "./data/example-teensy.json";
 import { useScriptLoader } from "./hooks/useScriptLoader";
 import { usePdfGeneration } from "./hooks/usePdfGeneration";
 import { useOverflowDetection } from "./hooks/useOverflowDetection";
@@ -13,7 +14,7 @@ import { Changelog } from "./components/Changelog";
 import { MobileControlsToggle } from "./components/MobileControlsToggle";
 import { DEFAULT_OPTIONS, randomColor } from "./types/options";
 import "./app.css";
-import { ScriptOptions, FancyDoc } from "botc-character-sheet";
+import { FancyDoc, ScriptOptions, TeensyDoc } from "botc-character-sheet";
 
 export function App() {
   const {
@@ -89,6 +90,10 @@ export function App() {
 
   const handleLoadExample = () => {
     loadScript(exampleScript as Script);
+  };
+  const handleLoadExampleTeensyville = () => {
+    loadScript(exampleTeensyville as Script);
+    updateOption("teensy", true);
   };
 
   const handleColorChange = (newColor: string | string[]) => {
@@ -180,6 +185,7 @@ export function App() {
             onSave={handleSaveScript}
             onFileUpload={handleFileUpload}
             onLoadExample={handleLoadExample}
+            onLoadExampleTeensyville={handleLoadExampleTeensyville}
             onColorChange={handleColorChange}
             onColorArrayChange={handleColorArrayChange}
             onAddColor={handleAddColor}
@@ -191,7 +197,24 @@ export function App() {
           />
         </div>
 
-        {script && (
+        {script && options.teensy && (
+          <div className="preview-section teensy-preview">
+            <TeensyDoc
+              script={script}
+              options={{
+                ...options,
+                dimensions: {
+                  ...options.dimensions,
+                  width: options.dimensions.height / 2,
+                  height: options.dimensions.width,
+                },
+              }}
+              nightOrders={nightOrders}
+            />
+          </div>
+        )}
+
+        {script && !options.teensy && (
           <div className="preview-section">
             <FancyDoc
               script={script}

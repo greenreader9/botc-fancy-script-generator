@@ -1057,6 +1057,14 @@ select.form-control-input:focus {
   }
 }
 
+@media not print {
+  .preview-section.teensy-preview {
+    transform-origin: top;
+    scale: 0.8;
+    margin: 0 -120px;
+  }
+}
+
 @media print {
   html {
     visibility: hidden;
