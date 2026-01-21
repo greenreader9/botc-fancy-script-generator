@@ -44,4 +44,5 @@ export const DEFAULT_OPTIONS: ScriptOptions = {
   numberOfCharacterSheets: 1,
   inlineJinxIcons: false,
   dimensions: { width: 210, height: 297, margin: 0, bleed: 0 },
+  teensy: false,
 };
