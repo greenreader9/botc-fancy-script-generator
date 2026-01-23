@@ -672,7 +672,6 @@ select.form-control-input:focus {
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0 2px 8px var(--shadow-light);
-  text-wrap: nowrap;
 }
 
 .example-button:hover {
